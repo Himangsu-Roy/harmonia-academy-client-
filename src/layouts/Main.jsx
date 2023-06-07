@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Slider from '../components/Slider';
 import PopularClassesSection from '../components/PopularClassesSection';
+import PopularInstructorsSection from '../components/PopularInstructorsSection';
 
 const Main = () => {
     return (
@@ -10,6 +11,7 @@ const Main = () => {
             <Navbar/>
             <Slider/>
             <PopularClassesSection/>
+            <PopularInstructorsSection/>
             <Footer/>
         </div>
     );
