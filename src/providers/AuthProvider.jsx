@@ -11,8 +11,8 @@ import {
   updateProfile,
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
-import { getRole } from "../api/auth";
-import axios from "axios";
+// import { getRole } from "../api/auth";
+// import axios from "axios";
 
 export const AuthContext = createContext(null);
 
