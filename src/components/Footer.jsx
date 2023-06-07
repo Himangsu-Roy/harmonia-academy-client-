@@ -5,9 +5,11 @@ const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white py-6">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
           <div className="mb-6 sm:mb-0">
-            <h4 className="text-gray-400 mb-3">Company</h4>
+            <h4 className="text-gray-400 font-semibold text-[18px] mb-3">
+              Company
+            </h4>
             <Link
               to="/about"
               className="text-gray-400 hover:text-white block mb-2">
@@ -25,7 +27,9 @@ const Footer = () => {
             </Link>
           </div>
           <div className="mb-6 sm:mb-0">
-            <h4 className="text-gray-400 mb-3">Support</h4>
+            <h4 className="text-gray-400 mb-3 font-semibold text-[18px]">
+              Support
+            </h4>
             <Link
               to="/faq"
               className="text-gray-400 hover:text-white block mb-2">
@@ -43,7 +47,9 @@ const Footer = () => {
             </Link>
           </div>
           <div className="mb-6 sm:mb-0">
-            <h4 className="text-gray-400 mb-3">Legal</h4>
+            <h4 className="text-gray-400 mb-3 font-semibold text-[18px]">
+              Legal
+            </h4>
             <Link
               to="/terms-of-service"
               className="text-gray-400 hover:text-white block mb-2">
@@ -61,7 +67,9 @@ const Footer = () => {
             </Link>
           </div>
           <div>
-            <h4 className="text-gray-400 mb-3">Connect With Us</h4>
+            <h4 className="text-gray-400 mb-3 font-semibold text-[18px]">
+              Connect With Us
+            </h4>
             <div className="flex space-x-3">
               <a href="#" className="text-gray-400 hover:text-white">
                 <i className="fab fa-facebook-f"></i>
