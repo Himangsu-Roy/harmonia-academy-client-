@@ -9,11 +9,11 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
-    const handleSignOut = (isSignedIn) => {
-      // Handle the sign-out logic
-      setIsSignedIn(isSignedIn);
-      console.log(isSignedIn)
-    };
+  const handleSignOut = (isSignedIn) => {
+    // Handle the sign-out logic
+    setIsSignedIn(isSignedIn);
+    console.log(isSignedIn);
+  };
 
   return (
     <nav className="relative bg-white shadow dark:bg-gray-800">
@@ -72,26 +72,26 @@ const Navbar = () => {
                 : "opacity-0 -translate-x-full"
             }`}>
             <div className="flex flex-col -mx-6 lg:flex-row lg:items-center lg:mx-8">
-              <a
-                href="#"
+              <Link
+                to=""
                 className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
                 Home
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/instructors"
                 className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
                 Instructor
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to=""
                 className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
                 Classes
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to=""
                 className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
                 Dashboard
-              </a>
+              </Link>
             </div>
 
             <div className="flex items-center mt-4 lg:mt-0">
@@ -113,11 +113,11 @@ const Navbar = () => {
                   </h3>
                 </button>
               ) : (
-                <a
-                  href="#"
+                <Link
+                  to=""
                   className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
                   Login
-                </a>
+                </Link>
               )}
             </div>
           </div>
