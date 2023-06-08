@@ -14,6 +14,7 @@ import ManageClasses from "../pages/ManageClasses";
 import ManageUsers from "../pages/ManageUsers";
 import NotFoundPage from "../pages/NotFoundPage";
 import Registration from "../pages/Registration";
+import Login from "../pages/Login";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
       {
         path: "/classes",
         element: <Classes />,
+      },
+      {
+        path: "/login",
+        element: <Login/>,
       },
       {
         path: "/registration",
