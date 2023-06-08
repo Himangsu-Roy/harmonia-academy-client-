@@ -44,12 +44,6 @@ const EnrollClasses = () => {
   return (
     <div className="container mx-auto py-8">
 
-      {/* My Selected Classes */}
-      <div>
-        <h3 className="text-lg font-semibold mb-4">My Selected Classes</h3>
-        {/* ... */}
-      </div>
-
       {/* My Enrolled Classes */}
       <div>
         <h3 className="text-lg font-semibold mb-4">My Enrolled Classes</h3>

@@ -12,11 +12,13 @@ import AddClass from "../pages/AddClass";
 import MyClasses from "../pages/MyClasses";
 import ManageClasses from "../pages/ManageClasses";
 import ManageUsers from "../pages/ManageUsers";
+import NotFoundPage from "../pages/NotFoundPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
+    errorElement: <NotFoundPage/>,
     children: [
       {
         path: "/",
