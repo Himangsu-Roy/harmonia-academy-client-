@@ -66,7 +66,7 @@ const ManageClasses = () => {
       {classes.map((classItem) => (
         <div
           key={classItem.id}
-          className="bg-white shadow-lg p-4 rounded-md mb-4">
+          className="bg-white shadow-lg p-4 rounded-md mb-4 text-black">
           <img
             src={classItem.classImage}
             alt="Class"
