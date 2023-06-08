@@ -8,7 +8,8 @@ import Dashboard from "../pages/Dashboard";
 import SelectedClasses from "../pages/SelectedClasses";
 import EnrollClasses from "../pages/EnrollClasses";
 import PaymentHistory from "../pages/PaymentHistory";
-
+import AddClass from "../pages/AddClass";
+import MyClasses from "../pages/MyClasses";
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +35,14 @@ export const router = createBrowserRouter([
     element: <Dashboard />,
     children: [
       {
+        path: "addclass",
+        element: <AddClass />,
+      },
+      {
+        path: "myclasses",
+        element: <MyClasses/>,
+      },
+      {
         path: "selectdclasses",
         element: <SelectedClasses />,
       },
@@ -43,7 +52,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "paymenthistory",
-        element: <PaymentHistory/>,
+        element: <PaymentHistory />,
       },
     ],
   },
