@@ -13,6 +13,7 @@ import MyClasses from "../pages/MyClasses";
 import ManageClasses from "../pages/ManageClasses";
 import ManageUsers from "../pages/ManageUsers";
 import NotFoundPage from "../pages/NotFoundPage";
+import Registration from "../pages/Registration";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
         path: "/classes",
         element: <Classes />,
       },
+      {
+        path: "/registration",
+        element: <Registration/>,
+      }
     ],
   },
   {
