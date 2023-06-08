@@ -31,12 +31,12 @@ const MyClasses = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto">
+    <div className="max-w-md mx-auto ">
       <h2 className="text-2xl font-bold mb-4">My Classes</h2>
       {classes.map((classItem) => (
         <div
           key={classItem.id}
-          className="bg-white shadow-lg p-4 rounded-md mb-4">
+          className="bg-white shadow-lg p-4 rounded-md mb-4 text-black">
           <h3 className="text-lg font-bold">{classItem.className}</h3>
           <p>Status: {classItem.status}</p>
           <p>Total Enrolled Students: {classItem.totalEnrolledStudents}</p>
