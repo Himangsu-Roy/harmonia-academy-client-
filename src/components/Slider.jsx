@@ -1,11 +1,15 @@
 import React from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import {FcNext} from "react-icons/fc";
+import {FcPrevious} from "react-icons/fc";
 
 const Slider = () => {
   return (
     <section className="bg-gray-900">
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto ">
+        {" "}
+        {/* px-4 py-12 */}
         <Carousel
           showStatus={false}
           showThumbs={false}
@@ -21,7 +25,8 @@ const Slider = () => {
                 title={label}
                 className="absolute left-0 top-1/2 transform -translate-y-1/2 focus:outline-none text-white z-10">
                 {/* Previous Arrow Icon */}
-                Previous
+                {/* Previous */}
+                <FcPrevious className="h-10 w-10"/>
               </button>
             )
           }
@@ -33,7 +38,8 @@ const Slider = () => {
                 title={label}
                 className="absolute right-0 top-1/2 transform -translate-y-1/2 focus:outline-none text-white">
                 {/* Next Arrow Icon */}
-                Next
+                {/* Next */}
+                <FcNext className="h-10 w-10"/>
               </button>
             )
           }>

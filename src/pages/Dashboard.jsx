@@ -147,10 +147,24 @@ const Dashboard = () => {
                 </Link>
               </li>
             </ul>
-            <div className="grid ">
-              <Link className="ml-5" title="Home" to="/">
+            <div className="grid justify-center">
+              {/* <Link className="ml-5" title="Home" to="/">
                 <AiFillHome className="w-5 h-5" />
-              </Link>
+              </Link> */}
+              
+                <Link
+                  to="/"
+                  title="Home"
+                  className=" flex flex-row justify-center items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-transparent hover:border-blue-500 dark:hover:border-gray-800">
+                  <span className="inline-flex justify-center items-center">
+                    <AiFillHome className="w-5 h-5" />
+                  </span>
+                  <span className="ml-2 text-sm tracking-wide truncate hidden md:block">
+                    Home
+                  </span>
+                </Link>
+              
+
               <p className=" px-5 py-3 hidden md:block text-center text-xs">
                 Copyright @2023
               </p>

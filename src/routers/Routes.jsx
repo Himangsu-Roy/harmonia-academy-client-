@@ -15,12 +15,13 @@ import ManageUsers from "../pages/ManageUsers";
 import NotFoundPage from "../pages/NotFoundPage";
 import Registration from "../pages/Registration";
 import Login from "../pages/Login";
+import UpdateClass from "../pages/UpdateClass";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
-    errorElement: <NotFoundPage/>,
+    errorElement: <NotFoundPage />,
     children: [
       {
         path: "/",
@@ -36,12 +37,12 @@ export const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <Login/>,
+        element: <Login />,
       },
       {
         path: "/registration",
-        element: <Registration/>,
-      }
+        element: <Registration />,
+      },
     ],
   },
   {
@@ -54,7 +55,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "manageusers",
-        element: <ManageUsers/>,
+        element: <ManageUsers />,
       },
       {
         path: "addclass",
@@ -75,6 +76,10 @@ export const router = createBrowserRouter([
       {
         path: "paymenthistory",
         element: <PaymentHistory />,
+      },
+      {
+        path: "myclasses/update/:id",
+        element: <UpdateClass />,
       },
     ],
   },

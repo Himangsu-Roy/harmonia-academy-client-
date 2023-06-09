@@ -81,3 +81,44 @@ const SelectedClasses = () => {
 };
 
 export default SelectedClasses;
+
+
+
+// import { useState } from "react";
+// import { useHistory } from "react-router-dom";
+
+// const MySelectedClasses = () => {
+//   const [selectedClasses, setSelectedClasses] = useState([
+//     {
+//       id: 1,
+//       name: "Class A",
+//       availableSeats: 5,
+//     },
+//     // Add more selected classes...
+//   ]);
+
+//   const history = useHistory();
+
+//   const handleSuccessfulPayment = (updatedClassInfo) => {
+//     // Update class information and remove the class from selected classes
+//     const updatedClasses = selectedClasses.map((cls) =>
+//       cls.id === updatedClassInfo.id ? updatedClassInfo : cls
+//     );
+//     setSelectedClasses(updatedClasses.filter((cls) => cls.id !== updatedClassInfo.id));
+//   };
+
+//   const handlePay = (classId) => {
+//     const classInfo = selectedClasses.find((cls) => cls.id === classId);
+
+//     // Redirect to the payment page
+//     history.push(`/payment/${classId}`, { classInfo });
+//   };
+
+//   // ...
+
+//   return (
+//     // ...
+//   );
+// };
+
+// export default MySelectedClasses;
