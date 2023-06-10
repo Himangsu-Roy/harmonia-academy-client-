@@ -123,7 +123,7 @@ const ManageUsers = () => {
     <div className="container mx-auto py-8">
       <h2 className="text-2xl font-bold mb-4">Manage Users</h2>
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white shadow-md rounded-lg text-black">
+        <table className="min-w-full bg-white shadow-md text-black">
           <thead>
             <tr className="bg-gray-200">
               <th className="py-2 px-4">Name</th>
@@ -138,7 +138,7 @@ const ManageUsers = () => {
                 <td className="py-2 px-4">{user.name}</td>
                 <td className="py-2 px-4">{user.email}</td>
                 <td className="py-2 px-4">{user.role}</td>
-                <td className="py-2 px-4 flex gap-4">
+                <td className="py-2 px-4 flex gap-4 justify-center">
                   <button
                     onClick={() => handleMakeInstructor(user.id)}
                     disabled={user.role === "instructor"}

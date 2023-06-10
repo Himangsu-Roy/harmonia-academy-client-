@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../providers/AuthProvider";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isSignedIn, setIsSignedIn] = useState(true);
+
+  const { user, logOut } = useContext(AuthContext);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleSignOut = (isSignedIn) => {
+  const handleSignOut = () => {
     // Handle the sign-out logic
-    setIsSignedIn(isSignedIn);
-    console.log(isSignedIn);
+    console.log("logout");
+    logOut();
   };
 
   return (
@@ -95,23 +97,49 @@ const Navbar = () => {
             </div>
 
             <div className="flex items-center mt-4 lg:mt-0">
-              {isSignedIn ? (
-                <button
-                  onClick={() => handleSignOut(!isSignedIn)}
-                  className="flex items-center focus:outline-none"
-                  aria-label="toggle profile dropdown">
-                  <div className="w-8 h-8 overflow-hidden border-2 border-gray-400 rounded-full">
-                    <img
-                      src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"
-                      className="object-cover w-full h-full"
-                      alt="avatar"
-                    />
-                  </div>
+              {user ? (
+                <>
 
-                  <h3 className="mx-2 text-gray-700 dark:text-gray-200 lg:hidden">
-                    Khatab wedaa
-                  </h3>
-                </button>
+                  <div className="relative w-full">
+                    
+                    <div className="flex justify-between ">
+                      <button
+                        // onClick={handleSignOut}
+                        onClick={toggleMenu}
+                        className="flex items-center focus:outline-none "
+                        aria-label="toggle profile dropdown">
+                        <div className="w-8 h-8 overflow-hidden border-2 border-gray-400 rounded-full ">
+                          <img
+                            title="Click to Logout"
+                            src={user?.photoURL}
+                            className="object-cover w-full h-full"
+                            alt="avatar"
+                          />
+                        </div>
+
+                        <h3 className="mx-2 text-gray-700 dark:text-gray-200 lg:hidden">
+                          {user?.displayName}
+                        </h3>
+                      </button>
+                      <div
+                        onClick={handleSignOut}
+                        className="md:hidden px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+                        Logout
+                      </div>
+                    </div>
+
+                    {isOpen && (
+                      <div
+                        className={`absolute right-0 mt-2 py-2 w-48 bg-white border rounded-md shadow-lg hidden md:block`}>
+                        <div
+                          onClick={handleSignOut}
+                          className=" px-4 py-2 text-gray-800 hover:bg-gray-200">
+                          Logout
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </>
               ) : (
                 <Link
                   to="/login"

@@ -1,8 +1,18 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import { useRef } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useContext, useRef, useState } from "react";
+import { AuthContext } from "../providers/AuthProvider";
 
 const Registration = () => {
+  const { createUser, updateUserProfile, signInWithGoogle } =
+    useContext(AuthContext);
+    const [error, setError] = useState("");
+
+  //? Navigate
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const {
     register,
     handleSubmit,
@@ -10,19 +20,44 @@ const Registration = () => {
     watch,
     formState: { errors },
   } = useForm();
-
   const password = useRef({});
   password.current = watch("password", "");
 
   const onSubmit = (data) => {
     // Submit the form or perform further actions
     console.log("Form submitted:", data);
+
+    createUser(data.email, data.password)
+      .then((result) => {
+        // const createdUser = result.user;
+        updateUserProfile(data.name, data.photoURL)
+          .then(() => {
+            navigate(from, { replace: true });
+            console.log("User Profile Updated");
+          })
+          .catch((error) => {
+            console.log("Error updating profile: ", error);
+            setError(error.message);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error.message);
+      });
+
+    setError("")
     reset();
   };
 
-    const handleGoogleLogin = () => {
-      // Handle Google login action
-    };
+  const handleGoogleLogin = () => {
+    // Handle Google login action
+    signInWithGoogle().then((result) => {
+      const user = result.user;
+      if (user) {
+        navigate(from, { replace: true });
+      }
+    });
+  };
 
   return (
     <div className="max-w-md mx-auto py-10">
@@ -30,6 +65,7 @@ const Registration = () => {
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4">
+            <p className="text-red-600 mb-5">{error}</p>
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
@@ -177,8 +213,3 @@ const Registration = () => {
 };
 
 export default Registration;
-
-
-
-
-

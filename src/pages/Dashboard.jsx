@@ -11,7 +11,7 @@ import { SiGoogleclassroom } from "react-icons/si";
 import { FaUsersCog } from "react-icons/fa";
 
 const Dashboard = () => {
-const [isAdmin, setIsAdmin] = useState(true);
+const [isAdmin, setIsAdmin] = useState(false);
 const [isInstructor, setIsInstructor] = useState(true);
 
 

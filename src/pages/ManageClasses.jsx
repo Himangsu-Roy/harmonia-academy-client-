@@ -310,13 +310,13 @@ const ManageClasses = () => {
       </div>
 
       {feedbackModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 text-black">
-          <div className="bg-white p-4 rounded-md">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 text-black ">
+          <div className="bg-white p-4 rounded-md w-[300px] ml-10 sm:w-[400px] sm:ml-24">
             <h3 className="text-lg font-bold mb-2">Send Feedback</h3>
             <textarea
               value={feedbackText}
               onChange={(e) => setFeedbackText(e.target.value)}
-              className="w-[500px] h-24 p-2 mb-2"
+              className="w-full h-24 p-2 mb-2"
               placeholder="Write your feedback here..."
             />
             <div className="flex justify-end">
