@@ -45,10 +45,10 @@ const AddClass = () => {
     
 
     // Clear the form fields
-    setClassName("");
-    setClassImage("");
-    setAvailableSeats(0);
-    setPrice(0);
+    // setClassName("");
+    // setClassImage("");
+    // setAvailableSeats(0);
+    // setPrice(0);
   };
 
   const handleClassImageChange = (e) => {

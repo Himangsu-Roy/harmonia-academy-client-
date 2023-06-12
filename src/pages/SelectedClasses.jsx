@@ -1,36 +1,54 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { deleteSelectClass, getSelectdClass } from "../api/class";
+import useAuth from "../hooks/useAuth";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+
+
 
 const SelectedClasses = () => {
   const [selectedClasses, setSelectedClasses] = useState([]);
 
-  const handleSelectClass = (className) => {
-    // Find the selected class from the available classes
-    const selectedClass = availableClasses.find(
-      (cls) => cls.name === className
-    );
+  const { user: userName, loading } = useAuth();
+  const [users, setUsers] = useState([]);
+  const [axiosSecure] = useAxiosSecure();
 
-    // Add the selected class to the list of selected classes
-    setSelectedClasses([...selectedClasses, selectedClass]);
-  };
+  const { refetch, data: selectData = [] } = useQuery({
+    queryKey: ["select", userName?.email],
+    enabled: !loading,
+    queryFn: async () => {
+      const res = await axiosSecure(`${import.meta.env.VITE_API_URL}/selected`);
+      console.log("res from axios", res.data);
+      return res.data;
+    },
+  });
 
-  const handleDeleteClass = (className) => {
+
+  useEffect(() => {
+    setSelectedClasses(selectData);
+  }, [selectData]);
+
+
+
+
+
+  const handleDeleteClass = (id) => {
     // Remove the class from the list of selected classes
-    const updatedSelectedClasses = selectedClasses.filter(
-      (cls) => cls.name !== className
-    );
-    setSelectedClasses(updatedSelectedClasses);
+    deleteSelectClass(id).then((data) => {
+      console.log(data);
+      refetch()
+    });
+    
   };
 
   return (
     <div className="container mx-auto py-8">
-      
-
       {/* My Selected Classes */}
       <div>
         <h3 className="text-lg font-semibold mb-4">My Selected Classes</h3>
         {selectedClasses.length > 0 ? (
-          <table className="w-full border border-gray-300">
-            <thead>
+          <table className="w-full border border-gray-300 ">
+            <thead className="text-black">
               <tr className="bg-gray-200">
                 <th className="border border-gray-300 px-4 py-2">Class name</th>
                 <th className="border border-gray-300 px-4 py-2">Instructor</th>
@@ -43,12 +61,12 @@ const SelectedClasses = () => {
             </thead>
             <tbody>
               {selectedClasses.map((cls) => (
-                <tr key={cls.name}>
+                <tr key={cls._id}>
                   <td className="border border-gray-300 px-4 py-2">
-                    {cls.name}
+                    {cls.className}
                   </td>
                   <td className="border border-gray-300 px-4 py-2">
-                    {cls.instructor}
+                    {cls.instructorName}
                   </td>
                   <td className="border border-gray-300 px-4 py-2">
                     {cls.availableSeats}
@@ -56,14 +74,14 @@ const SelectedClasses = () => {
                   <td className="border border-gray-300 px-4 py-2">
                     {cls.price}
                   </td>
-                  <td className="border border-gray-300 px-4 py-2">
+                  <td className="border border-gray-300 px-4 py-2 text-center">
                     <button
-                      onClick={() => handleDeleteClass(cls.name)}
-                      className="mr-2">
+                      onClick={() => handleDeleteClass(cls._id)}
+                      className="mr-2 bg-blue-500 text-white px-4 py-2 rounded">
                       Delete
                     </button>
                     <button
-                      onClick={() => handlePayClass(cls.name)}
+                      onClick={() => handlePayClass(cls._id)}
                       className="bg-blue-500 text-white px-4 py-2 rounded">
                       Pay
                     </button>
@@ -81,44 +99,3 @@ const SelectedClasses = () => {
 };
 
 export default SelectedClasses;
-
-
-
-// import { useState } from "react";
-// import { useHistory } from "react-router-dom";
-
-// const MySelectedClasses = () => {
-//   const [selectedClasses, setSelectedClasses] = useState([
-//     {
-//       id: 1,
-//       name: "Class A",
-//       availableSeats: 5,
-//     },
-//     // Add more selected classes...
-//   ]);
-
-//   const history = useHistory();
-
-//   const handleSuccessfulPayment = (updatedClassInfo) => {
-//     // Update class information and remove the class from selected classes
-//     const updatedClasses = selectedClasses.map((cls) =>
-//       cls.id === updatedClassInfo.id ? updatedClassInfo : cls
-//     );
-//     setSelectedClasses(updatedClasses.filter((cls) => cls.id !== updatedClassInfo.id));
-//   };
-
-//   const handlePay = (classId) => {
-//     const classInfo = selectedClasses.find((cls) => cls.id === classId);
-
-//     // Redirect to the payment page
-//     history.push(`/payment/${classId}`, { classInfo });
-//   };
-
-//   // ...
-
-//   return (
-//     // ...
-//   );
-// };
-
-// export default MySelectedClasses;

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
 import { AuthContext } from "../providers/AuthProvider";
+import { saveUser } from "../api/users";
 
 const Login = () => {
   const { signIn, signInWithGoogle } = useContext(AuthContext);
@@ -44,7 +45,7 @@ const Login = () => {
       .then((result) => {
         console.log(result.user);
         // save user to db
-        // saveUser(result.user);
+        saveUser(result.user);
         navigate(from, { replace: true });
       })
       .catch((err) => {

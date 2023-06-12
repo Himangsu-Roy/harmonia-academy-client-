@@ -12,7 +12,7 @@ import { FaUsersCog } from "react-icons/fa";
 
 const Dashboard = () => {
 const [isAdmin, setIsAdmin] = useState(false);
-const [isInstructor, setIsInstructor] = useState(true);
+const [isInstructor, setIsInstructor] = useState(false);
 
 
   return (

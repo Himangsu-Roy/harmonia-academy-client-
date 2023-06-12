@@ -1,122 +1,61 @@
-
-
-// import { useState } from "react";
-
-// const ManageUsers = () => {
-//   const [users, setUsers] = useState([
-//     {
-//       id: 1,
-//       name: "John Doe",
-//       email: "john.doe@example.com",
-//       role: "student",
-//     },
-//     // Add more user objects here
-//   ]);
-
-//   const handleMakeInstructor = (userId) => {
-//     // Update the role of the user with the given id to "instructor"
-//     setUsers((prevUsers) =>
-//       prevUsers.map((user) =>
-//         user.id === userId ? { ...user, role: "instructor" } : user
-//       )
-//     );
-//   };
-
-//   const handleMakeAdmin = (userId) => {
-//     // Update the role of the user with the given id to "admin"
-//     setUsers((prevUsers) =>
-//       prevUsers.map((user) =>
-//         user.id === userId ? { ...user, role: "admin" } : user
-//       )
-//     );
-//   };
-
-//   return (
-//     <div>
-//       <h2 className="text-2xl font-bold mb-4">Manage Users</h2>
-//       <div className="overflow-x-auto">
-//         <table className="w-full">
-//           <thead>
-//             <tr>
-//               <th className="py-2">Name</th>
-//               <th className="py-2">Email</th>
-//               <th className="py-2">Role</th>
-//               <th className="py-2">Actions</th>
-//             </tr>
-//           </thead>
-//           <tbody>
-//             {users.map((user) => (
-//               <tr key={user.id}>
-//                 <td className="py-2">{user.name}</td>
-//                 <td className="py-2">{user.email}</td>
-//                 <td className="py-2">{user.role}</td>
-//                 <td className="py-2">
-//                   {/* {user.role !== "instructor" && (
-//                   )} */}
-//                   <button
-//                     onClick={() => handleMakeInstructor(user.id)}
-//                     disabled={user.role === "instructor"}
-//                     className={` py-1 px-2 rounded-md  transition-colors mb-2 md:mb-0 md:mr-2 ${
-//                       user.role === "instructor"
-//                         ? "bg-blue-200 text-white"
-//                         : "bg-blue-500 text-white hover:bg-blue-600"
-//                     }`}>
-//                     Make Instructor
-//                   </button>
-//                   {/* {user.role !== "admin" && (
-//                   )} */}
-//                   <button
-//                     onClick={() => handleMakeAdmin(user.id)}
-//                     disabled={user.role === "admin"}
-//                     className={` text-white py-1 px-2 rounded-md  transition-colors ${
-//                       user.role === "admin"
-//                         ? "bg-red-200 text-white"
-//                         : "bg-red-500 text-white hover:bg-red-600"
-//                     } `}>
-//                     Make Admin
-//                   </button>
-//                 </td>
-                
-//               </tr>
-//             ))}
-//           </tbody>
-//         </table>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ManageUsers;
-
-
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getUsers, setRole } from "../api/users";
+import useAuth from "../hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const ManageUsers = () => {
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      name: "John Doe",
-      email: "john.doe@example.com",
-      role: "student",
+  const { user: userName, loading } = useAuth();
+  const [users, setUsers] = useState([]);
+  const [axiosSecure] = useAxiosSecure();
+  
+  const { refetch, data: userData = [] } = useQuery({
+    queryKey: ["user", userName?.email],
+    enabled: !loading,
+    queryFn: async () => {
+      const res = await axiosSecure(
+        `${import.meta.env.VITE_API_URL}/users`
+      );
+      console.log("res from axios", res.data);
+      return res.data;
     },
-    // Add more user objects here
-  ]);
+  });
+  
+ 
+
+  useEffect(() => {
+    setUsers(userData);
+  }, [userData]);
+
+
+
 
   const handleMakeInstructor = (userId) => {
-    setUsers((prevUsers) =>
-      prevUsers.map((user) =>
-        user.id === userId ? { ...user, role: "instructor" } : user
-      )
-    );
+    // setUsers((prevUsers) =>
+    //   prevUsers.map((user) =>
+    //     user.id === userId ? { ...user, role: "instructor" } : user
+    //   )
+    // );
+
+    setRole(userId, { role: "instructor" })
+    .then(data => {
+      console.log(data)
+      refetch()
+    })
+
   };
 
   const handleMakeAdmin = (userId) => {
-    setUsers((prevUsers) =>
-      prevUsers.map((user) =>
-        user.id === userId ? { ...user, role: "admin" } : user
-      )
-    );
+    // setUsers((prevUsers) =>
+    //   prevUsers.map((user) =>
+    //     user._id === userId ? { ...user, role: "admin" } : user
+    //   )
+    // );
+    setRole(userId, { role: "admin" })
+    .then(data => {
+      console.log(data)
+      refetch()
+    })
   };
 
   return (
@@ -134,13 +73,13 @@ const ManageUsers = () => {
           </thead>
           <tbody className="text-center">
             {users.map((user) => (
-              <tr key={user.id}>
-                <td className="py-2 px-4">{user.name}</td>
+              <tr key={user._id}>
+                <td className="py-2 px-4">{userName?.displayName}</td>
                 <td className="py-2 px-4">{user.email}</td>
                 <td className="py-2 px-4">{user.role}</td>
                 <td className="py-2 px-4 flex gap-4 justify-center">
                   <button
-                    onClick={() => handleMakeInstructor(user.id)}
+                    onClick={() => handleMakeInstructor(user.email)}
                     disabled={user.role === "instructor"}
                     className={`py-1 px-2 rounded-md transition-colors mb-2 md:mb-0 md:mr-2  ${
                       user.role === "instructor"
@@ -150,7 +89,7 @@ const ManageUsers = () => {
                     Make Instructor
                   </button>
                   <button
-                    onClick={() => handleMakeAdmin(user.id)}
+                    onClick={() => handleMakeAdmin(user.email)}
                     disabled={user.role === "admin"}
                     className={`py-1 px-2 rounded-md transition-colors ${
                       user.role === "admin"
@@ -170,4 +109,3 @@ const ManageUsers = () => {
 };
 
 export default ManageUsers;
-

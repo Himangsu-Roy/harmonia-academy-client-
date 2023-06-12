@@ -80,6 +80,7 @@ export const router = createBrowserRouter([
       {
         path: "myclasses/update/:id",
         element: <UpdateClass />,
+        loader: ({params}) => fetch(`${import.meta.env.VITE_API_URL}/class/${params.id}`)
       },
     ],
   },

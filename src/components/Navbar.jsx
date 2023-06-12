@@ -123,7 +123,7 @@ const Navbar = () => {
                       </button>
                       <div
                         onClick={handleSignOut}
-                        className="md:hidden px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+                        className="md:hidden px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray- cursor-pointer">
                         Logout
                       </div>
                     </div>
@@ -133,7 +133,7 @@ const Navbar = () => {
                         className={`absolute right-0 mt-2 py-2 w-48 bg-white border rounded-md shadow-lg hidden md:block`}>
                         <div
                           onClick={handleSignOut}
-                          className=" px-4 py-2 text-gray-800 hover:bg-gray-200">
+                          className=" px-4 py-2 text-gray-800 hover:bg-gray-200 cursor-pointer">
                           Logout
                         </div>
                       </div>

@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
+import { saveUser } from "../api/users";
 
 const Registration = () => {
   const { createUser, updateUserProfile, signInWithGoogle } =
@@ -32,6 +33,7 @@ const Registration = () => {
         // const createdUser = result.user;
         updateUserProfile(data.name, data.photoURL)
           .then(() => {
+            saveUser(result.user)
             navigate(from, { replace: true });
             console.log("User Profile Updated");
           })
@@ -53,6 +55,7 @@ const Registration = () => {
     // Handle Google login action
     signInWithGoogle().then((result) => {
       const user = result.user;
+      saveUser(user)
       if (user) {
         navigate(from, { replace: true });
       }

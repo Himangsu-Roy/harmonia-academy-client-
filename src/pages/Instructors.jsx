@@ -1,19 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getInstructors } from "../api/instructors";
 
 const Instructors = () => {
-  const instructors = [
-    {
-      name: "John Doe",
-      email: "johndoe@example.com",
-      image: "/images/john-doe.jpg",
-    },
-    {
-      name: "Jane Smith",
-      email: "janesmith@example.com",
-      image: "/images/jane-smith.jpg",
-    },
-    // Add more instructors here...
-  ];
+  const [instructors, setInstructors] = useState([]) 
+
+
+  useEffect(() => {
+    getInstructors()
+    .then(data => {
+      setInstructors(data)
+    })
+  }, [instructors])
 
   return (
     <div className="container mx-auto px-4 py-10">
