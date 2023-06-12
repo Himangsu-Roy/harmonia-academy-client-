@@ -3,8 +3,7 @@ import { deleteSelectClass, getSelectdClass } from "../api/class";
 import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-
-
+import { Link } from "react-router-dom";
 
 const SelectedClasses = () => {
   const [selectedClasses, setSelectedClasses] = useState([]);
@@ -23,22 +22,19 @@ const SelectedClasses = () => {
     },
   });
 
+  if(selectData) {
+    useEffect(() => {
+      setSelectedClasses(selectData);
+    }, [axiosSecure,  selectData]);
 
-  useEffect(() => {
-    setSelectedClasses(selectData);
-  }, [selectData]);
-
-
-
-
+  }
 
   const handleDeleteClass = (id) => {
     // Remove the class from the list of selected classes
     deleteSelectClass(id).then((data) => {
       console.log(data);
-      refetch()
+      refetch();
     });
-    
   };
 
   return (
@@ -80,11 +76,13 @@ const SelectedClasses = () => {
                       className="mr-2 bg-blue-500 text-white px-4 py-2 rounded">
                       Delete
                     </button>
-                    <button
-                      onClick={() => handlePayClass(cls._id)}
-                      className="bg-blue-500 text-white px-4 py-2 rounded">
-                      Pay
-                    </button>
+                    <Link to={`/dashboard/payment/${cls._id}`}>
+                      <button
+                        
+                        className="bg-blue-500 text-white px-4 py-2 rounded">
+                        Pay
+                      </button>
+                    </Link>
                   </td>
                 </tr>
               ))}

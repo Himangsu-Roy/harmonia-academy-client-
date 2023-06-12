@@ -16,6 +16,7 @@ import NotFoundPage from "../pages/NotFoundPage";
 import Registration from "../pages/Registration";
 import Login from "../pages/Login";
 import UpdateClass from "../pages/UpdateClass";
+import Payment from "../pages/Payment";
 
 export const router = createBrowserRouter([
   {
@@ -80,7 +81,14 @@ export const router = createBrowserRouter([
       {
         path: "myclasses/update/:id",
         element: <UpdateClass />,
-        loader: ({params}) => fetch(`${import.meta.env.VITE_API_URL}/class/${params.id}`)
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_URL}/class/${params.id}`),
+      },
+      {
+        path: "payment/:id",
+        element: <Payment />,
+        loader: ({params}) =>
+          fetch(`${import.meta.env.VITE_API_URL}/selectClass/${params.id}`),
       },
     ],
   },
