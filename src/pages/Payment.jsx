@@ -125,8 +125,9 @@ const CheckoutForm = () => {
 
   // classPrice Data Fetch from api
   const selectData = useLoaderData();
-  const {price, _id} = selectData;
-  const classPrice = parseFloat(price.toFixed(2))
+  console.log(selectData)
+  const { price, _id, instructorName, availableSeats, className } = selectData;
+  const classPrice = (parseFloat(price)).toFixed(2)
   
 
   console.log(billingDetails)
@@ -167,7 +168,7 @@ const CheckoutForm = () => {
     const payload = await stripe.createPaymentMethod({
       type: "card",
       card,
-      // billing_details: billingDetails,
+      billing_details: billingDetails,
     });
 
     setProcessing(false);
@@ -186,12 +187,12 @@ const CheckoutForm = () => {
       await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
           card: card,
-          // billing_details: billingDetails,
-          billing_details: {
-            name: user?.displayName || "unknown",
-            email: user?.email || "anonymous",
-            
-          },
+          billing_details: billingDetails,
+          // billing_details: {
+          //   name: user?.displayName || "unknown",
+          //   email: user?.email || "anonymous",
+
+          // },
         },
       });
 
@@ -199,18 +200,33 @@ const CheckoutForm = () => {
       console.log(confirmError);
     }
 
+    // Format Date
+    const dateString = new Date();
+    const date = new Date(dateString);
+    const formattedDate = date.toLocaleString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+    });
+
     //success payment infromation
     setProcessing(false);
     if (paymentIntent.status === "succeeded") {
       setTransactionId(paymentIntent.id);
-      const transactionId = paymentIntent.id;
+      // const transactionId = paymentIntent.id;
       // save payment information to server
       const payment = {
         email: user?.email,
         transactionId: transactionId,
         classPrice,
         id: _id,
-       
+        instructorName,
+        availableSeats,
+        className,
+        date: formattedDate,
       };
 
 
@@ -223,7 +239,6 @@ const CheckoutForm = () => {
     }
     //
   };
-
 
   
 
@@ -310,9 +325,7 @@ const CheckoutForm = () => {
   );
 };
 
-// import { Elements } from "@stripe/react-stripe-js";
-// import { loadStripe } from "@stripe/stripe-js";
-// import CheckoutForm from "./CheckoutForm";
+
 
 
 const ELEMENTS_OPTIONS = {
@@ -339,32 +352,3 @@ const Payment = () => {
 
 export default Payment;
 
-
-
-
-
-
-// import { loadStripe } from "@stripe/stripe-js";
-// import { Elements } from "@stripe/react-stripe-js";
-// import CheckoutForm from "./CheckoutForm";
-
-// // TODO: pk(provide publishable key) DONE
-// const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_KEY);
-// console.log(import.meta.env.VITE_Payment_Gateway_PK);
-
-// const Payment = () => {
- 
-
- 
-
-//   return (
-//     <div className=" ">
-      
-//       <Elements stripe={stripePromise}>
-//         <CheckoutForm></CheckoutForm>
-//       </Elements>
-//     </div>
-//   );
-// };
-
-// export default Payment;

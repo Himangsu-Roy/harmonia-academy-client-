@@ -11,26 +11,26 @@ const SelectedClasses = () => {
   const { user: userName, loading } = useAuth();
   const [users, setUsers] = useState([]);
   const [axiosSecure] = useAxiosSecure();
+  const [isData, isSetData] = useState(true);
 
-  const { refetch, data: selectData = [] } = useQuery({
+  const { refetch, data = [] } = useQuery({
     queryKey: ["select", userName?.email],
     enabled: !loading,
     queryFn: async () => {
-      const res = await axiosSecure(`${import.meta.env.VITE_API_URL}/selected`);
+      const res = await axiosSecure.get(`${import.meta.env.VITE_API_URL}/selected`);
       console.log("res from axios", res.data);
       return res.data;
     },
   });
 
-  if(selectData) {
-    useEffect(() => {
-      setSelectedClasses(selectData);
-    }, [axiosSecure,  selectData]);
+  useEffect(() => {
+    getSelectdClass().then((data) => {
+      setSelectedClasses(data);
+    });
+  }, [selectedClasses]);
 
-  }
 
   const handleDeleteClass = (id) => {
-    // Remove the class from the list of selected classes
     deleteSelectClass(id).then((data) => {
       console.log(data);
       refetch();
@@ -77,9 +77,7 @@ const SelectedClasses = () => {
                       Delete
                     </button>
                     <Link to={`/dashboard/payment/${cls._id}`}>
-                      <button
-                        
-                        className="bg-blue-500 text-white px-4 py-2 rounded">
+                      <button className="bg-blue-500 text-white px-4 py-2 rounded">
                         Pay
                       </button>
                     </Link>

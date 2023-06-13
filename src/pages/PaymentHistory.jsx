@@ -1,128 +1,129 @@
+
+// import React, { useState, useEffect } from "react";
+// import useAxiosSecure from "../hooks/useAxiosSecure";
+// import useAuth from "../hooks/useAuth";
+
+// const PaymentHistory = () => {
+//   const { user } = useAuth();
+//   const [paymentHistory, setPaymentHistory] = useState([]);
+//   const [axiosSecure] = useAxiosSecure();
+
+//   useEffect(() => {
+//     axiosSecure.get(`/payments`).then((data) => {
+//       setPaymentHistory(data.data);
+//     });
+//   }, [axiosSecure, user]);
+
+//   return (
+//     <div className="container mx-auto py-8">
+//       <div className="my-4">
+//         <h3 className="text-2xl font-semibold mb-4">Payment History</h3>
+//         {paymentHistory.length > 0 ? (
+//           <table className="min-w-full bg-white border border-gray-300">
+//             <thead className="text-black">
+//               <tr className="bg-gray-200">
+//                 <th className="py-3 px-4 border-b font-semibold text-left">Email</th>
+//                 <th className="py-3 px-4 border-b font-semibold text-left">Payment Date</th>
+//                 <th className="py-3 px-4 border-b font-semibold text-left">Transation id</th>
+//                 <th className="py-3 px-4 border-b font-semibold text-left">Amount</th>
+//               </tr>
+//             </thead>
+//             <tbody className="text-black">
+//               {paymentHistory.map((payment, index) => (
+//                 <tr key={payment._id} className={`${index % 2 === 0 ? "bg-gray-100" : ""}`}>
+//                   <td className="py-3 px-4">{payment.email}</td>
+//                   <td className="py-3 px-4">{payment.date}</td>
+//                   <td className="py-3 px-4">{payment.transation}</td>
+//                   <td className="py-3 px-4">
+//                     {/* <span
+//                       className={`inline-block rounded-full px-3 py-1 text-sm font-semibold ${
+//                         payment.status === "paid"
+//                           ? "bg-green-500 text-white"
+//                           : "bg-red-500 text-white"
+//                       }`}
+//                     >
+//                       {payment.status}
+//                     </span> */}
+//                     {payment.amount}
+//                   </td>
+//                 </tr>
+//               ))}
+//             </tbody>
+//           </table>
+//         ) : (
+//           <p className="mt-4 text-gray-600">No payment history available.</p>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default PaymentHistory;
+
+
+
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import useAuth from "../hooks/useAuth";
 
 const PaymentHistory = () => {
-  const [selectedClasses, setSelectedClasses] = useState([]);
-  const [enrolledClasses, setEnrolledClasses] = useState([]);
+  const { user } = useAuth();
   const [paymentHistory, setPaymentHistory] = useState([]);
-
-  const navigate = useNavigate();
+  const [axiosSecure] = useAxiosSecure();
 
   useEffect(() => {
-    // Simulating fetching enrolled classes and payment history from the server
-    // You can replace this with your actual data fetching logic
-    const fetchData = async () => {
-      try {
-        // Make an API call to fetch the enrolled classes for the student
-        const enrolledClassesResponse = await fetch("/api/enrolled-classes");
-        const enrolledClassesData = await enrolledClassesResponse.json();
-
-        // Make an API call to fetch the payment history for the student
-        const paymentHistoryResponse = await fetch("/api/payment-history");
-        const paymentHistoryData = await paymentHistoryResponse.json();
-
-        // Update the enrolled classes and payment history states with the fetched data
-        setEnrolledClasses(enrolledClassesData);
-        setPaymentHistory(paymentHistoryData);
-      } catch (error) {
-        console.log("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const handleSelectClass = (className) => {
-    // Find the selected class from the available classes
-    const selectedClass = availableClasses.find(
-      (cls) => cls.name === className
-    );
-
-    // Add the selected class to the list of selected classes
-    setSelectedClasses([...selectedClasses, selectedClass]);
-  };
-
-  const handleDeleteClass = (className) => {
-    // Remove the class from the list of selected classes
-    const updatedSelectedClasses = selectedClasses.filter(
-      (cls) => cls.name !== className
-    );
-    setSelectedClasses(updatedSelectedClasses);
-  };
-
-  const handlePay = (className) => {
-    // Find the selected class from the list of selected classes
-    const selectedClass = selectedClasses.find((cls) => cls.name === className);
-
-    // Perform payment logic (e.g., redirect to payment page)
-    // ...
-
-    // Simulating a successful payment
-    const updatedEnrolledClasses = [...enrolledClasses, selectedClass];
-    const updatedPaymentHistory = [
-      {
-        class: selectedClass,
-        date: new Date().toISOString(),
-      },
-      ...paymentHistory,
-    ];
-
-    // Update the enrolled classes and payment history states
-    setEnrolledClasses(updatedEnrolledClasses);
-    setPaymentHistory(updatedPaymentHistory);
-
-    // Remove the class from the list of selected classes
-    const updatedSelectedClasses = selectedClasses.filter(
-      (cls) => cls.name !== className
-    );
-    setSelectedClasses(updatedSelectedClasses);
-
-    // Redirect to the My Enrolled Classes page
-    navigate("/dashboard/enrollclasses");
-  };
+    axiosSecure.get(`/payments`).then((data) => {
+      setPaymentHistory(data.data);
+    });
+  }, [axiosSecure, user]);
 
   return (
     <div className="container mx-auto py-8">
-
-      {/* My Selected Classes */}
-      {/* <div>
-        <h3 className="text-lg font-semibold mb-4">My Selected Classes</h3>
-        
-      </div> */}
-
-      {/* My Enrolled Classes */}
-      {/* <div>
-        <h3 className="text-lg font-semibold mb-4">My Enrolled Classes</h3>
-        {enrolledClasses.length > 0 ? (
-          <ul>
-            {enrolledClasses.map((cls) => (
-              <li key={cls.name}>
-                <p>{cls.name}</p>
-                <p>Instructor: {cls.instructor}</p>
-                <p>Available seats: {cls.availableSeats}</p>
-                <p>Price: {cls.price}</p>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No classes enrolled yet.</p>
-        )}
-      </div> */}
-
-      {/* Payment History */}
-      <div>
-        <h3 className="text-lg font-semibold mb-4">Payment History</h3>
+      <div className="my-4 overflow-x-auto">
+        <h3 className="text-2xl font-semibold mb-4">Payment History</h3>
         {paymentHistory.length > 0 ? (
-          <ul>
-            {paymentHistory.map((payment) => (
-              <li key={payment.date}>
-                <p>Class: {payment.class.name}</p>
-                <p>Date: {payment.date}</p>
-              </li>
-            ))}
-          </ul>
+          <div className="shadow overflow-x-auto border-b border-gray-200 sm:rounded-lg">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Email
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Payment Date
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Transaction ID
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Amount
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {paymentHistory.map((payment, index) => (
+                  <tr
+                    key={payment._id}
+                    className={`${index % 2 === 0 ? "bg-gray-50" : ""}`}>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {payment.email}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {payment.date}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {payment.transactionId}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                     ${payment.classPrice}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         ) : (
-          <p>No payment history available.</p>
+          <p className="mt-4 text-gray-600">No payment history available.</p>
         )}
       </div>
     </div>
