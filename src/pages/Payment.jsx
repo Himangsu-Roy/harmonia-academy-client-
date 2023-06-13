@@ -125,10 +125,9 @@ const CheckoutForm = () => {
 
   // classPrice Data Fetch from api
   const selectData = useLoaderData();
-  console.log(selectData)
   const { price, _id, instructorName, availableSeats, className } = selectData;
   const classPrice = (parseFloat(price)).toFixed(2)
-  
+  console.log(_id);
 
   console.log(billingDetails)
 
@@ -216,7 +215,7 @@ const CheckoutForm = () => {
     setProcessing(false);
     if (paymentIntent.status === "succeeded") {
       setTransactionId(paymentIntent.id);
-      // const transactionId = paymentIntent.id;
+      const transactionId = paymentIntent.id;
       // save payment information to server
       const payment = {
         email: user?.email,
@@ -234,6 +233,12 @@ const CheckoutForm = () => {
         console.log(res.data);
         if (res.data.insertedId) {
           // didplay confirm
+          // remove from seleted class
+          // axiosSecure.delete(`/selectClass/${_id}`)
+          // .then(res => {
+          //   console.log(res)
+            
+          // })
         }
       });
     }

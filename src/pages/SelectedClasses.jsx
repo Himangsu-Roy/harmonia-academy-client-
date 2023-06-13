@@ -8,26 +8,28 @@ import { Link } from "react-router-dom";
 const SelectedClasses = () => {
   const [selectedClasses, setSelectedClasses] = useState([]);
 
-  const { user: userName, loading } = useAuth();
+  const { user, loading } = useAuth();
   const [users, setUsers] = useState([]);
   const [axiosSecure] = useAxiosSecure();
   const [isData, isSetData] = useState(true);
 
   const { refetch, data = [] } = useQuery({
-    queryKey: ["select", userName?.email],
+    queryKey: ["select", user?.email],
     enabled: !loading,
     queryFn: async () => {
-      const res = await axiosSecure.get(`${import.meta.env.VITE_API_URL}/selected`);
+      const res = await axiosSecure.get(`${import.meta.env.VITE_API_URL}/selected/${user?.email}`);
       console.log("res from axios", res.data);
       return res.data;
     },
   });
 
   useEffect(() => {
-    getSelectdClass().then((data) => {
+    getSelectdClass(user?.email).then((data) => {
       setSelectedClasses(data);
+      console.log(data)
     });
   }, [selectedClasses]);
+
 
 
   const handleDeleteClass = (id) => {
@@ -35,6 +37,7 @@ const SelectedClasses = () => {
       console.log(data);
       refetch();
     });
+    
   };
 
   return (
@@ -68,7 +71,7 @@ const SelectedClasses = () => {
                     {cls.availableSeats}
                   </td>
                   <td className="border border-gray-300 px-4 py-2">
-                    {cls.price}
+                    ${cls.price}
                   </td>
                   <td className="border border-gray-300 px-4 py-2 text-center">
                     <button

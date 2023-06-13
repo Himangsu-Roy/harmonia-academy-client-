@@ -111,6 +111,7 @@ const EnrollClasses = () => {
   useEffect(() => {
     axiosSecure.get(`/enrolled/${user?.email}`).then((data) => {
       setEnrolledClasses(data.data);
+      console.log(data)
     });
   }, [axiosSecure, enrolledClasses]);
 
@@ -142,7 +143,7 @@ const EnrollClasses = () => {
                   key={cls._id}
                   className={`${index % 2 === 0 ? "bg-gray-100" : ""}`}>
                   <td className="py-3 px-4">{cls.className}</td>
-                  <td className="py-3 px-4">{cls.instructor}</td>
+                  <td className="py-3 px-4">{cls.instructorName}</td>
                   <td className="py-3 px-4">{cls.availableSeats}</td>
                   <td className="py-3 px-4">{cls.classPrice}</td>
                 </tr>

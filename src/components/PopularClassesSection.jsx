@@ -52,29 +52,38 @@
 
 
 
-import React from "react";
+import React, { useState } from "react";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const PopularClassesSection = () => {
   // Sample data for popular classes
-  const popularClasses = [
-    {
-      id: 1,
-      title: "Yoga Class",
-      image: "yoga.jpg",
-      students: 120,
-    },
-    {
-      id: 2,
-      title: "Pilates Class",
-      image: "pilates.jpg",
-      students: 98,
-    },
-    // Add more classes as needed
-  ];
+  // const popularClasses = [
+  //   {
+  //     id: 1,
+  //     title: "Yoga Class",
+  //     image: "yoga.jpg",
+  //     students: 120,
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Pilates Class",
+  //     image: "pilates.jpg",
+  //     students: 98,
+  //   },
+  //   // Add more classes as needed
+  // ];
+  const [popularClasses, setPopularClasses] = useState([]);
+
+  const [axiosSecure] = useAxiosSecure();
+
+  axiosSecure.get("/popular-classes").then((data) => {
+    setPopularClasses(data.data);
+  });
 
   // Sort popular classes based on the number of students (descending order)
-  const sortedClasses = popularClasses.sort((a, b) => b.students - a.students);
+  const sortedClasses = popularClasses.sort((a, b) => b.className - a.className);
 
+  console.log(popularClasses)
   // Get the top 6 classes
   const topClasses = sortedClasses.slice(0, 6);
 
@@ -86,7 +95,7 @@ const PopularClassesSection = () => {
           {topClasses.map((classItem) => (
             <div
               className="bg-white rounded-lg shadow-lg overflow-hidden"
-              key={classItem.id}>
+              key={classItem._id}>
               <img
                 src={classItem.image}
                 alt={classItem.title}

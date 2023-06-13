@@ -5,23 +5,8 @@ import useAuth from "../hooks/useAuth";
 const Classes = ({ loggedIn, isAdmin }) => {
   const {user} = useAuth();
   const [classes, setClasses] = useState([]);
-  // const classes = [
-  //   {
-  //     name: "Music Theory 101",
-  //     instructor: "John Doe",
-  //     image: "/images/music-theory.jpg",
-  //     availableSeats: 10,
-  //     price: 99,
-  //   },
-  //   {
-  //     name: "Guitar Basics",
-  //     instructor: "Jane Smith",
-  //     image: "/images/guitar-basics.jpg",
-  //     availableSeats: 5,
-  //     price: 149,
-  //   },
-  //   // Add more classes here...
-  // ];
+  
+ 
 
   useEffect(() => {
     getAllClasses()
@@ -48,18 +33,16 @@ const Classes = ({ loggedIn, isAdmin }) => {
     getClass(classId)
     .then(data => {
       console.log(data)
+      
       data.map(item => {
-        selectClass(item)
+        // setItems(item)
+        selectClass({...item, email: user?.email})
         .then(data => {
           console.log(data)
         })
       })
     })
-    console.log(classId)
-
-    // selectClass(classes)
-    
-
+   
 
     alert(`You have selected the class: ${""}`);
   };

@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
 import { AuthContext } from "../providers/AuthProvider";
 import { saveUser } from "../api/users";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
   const { signIn, signInWithGoogle } = useContext(AuthContext);

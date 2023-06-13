@@ -9,11 +9,12 @@ import {
 
 import { SiGoogleclassroom } from "react-icons/si";
 import { FaUsersCog } from "react-icons/fa";
+import useAuth from "../hooks/useAuth";
 
 const Dashboard = () => {
-const [isAdmin, setIsAdmin] = useState(false);
-const [isInstructor, setIsInstructor] = useState(false);
-
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isInstructor, setIsInstructor] = useState(false);
+  const { role } = useAuth();
 
   return (
     <div>
@@ -23,7 +24,7 @@ const [isInstructor, setIsInstructor] = useState(false);
           <div className="overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow">
             <ul className="flex flex-col py-4 space-y-1">
               {/* Admin Dashboard */}
-              {isAdmin ? (
+              {role === "admin" ? (
                 <>
                   <li className="px-5 hidden md:block">
                     <div className="flex flex-row items-center h-8">
@@ -69,7 +70,7 @@ const [isInstructor, setIsInstructor] = useState(false);
                     </Link>
                   </li>
                 </>
-              ) : isInstructor ? (
+              ) : role === "isInstructor" ? (
                 <>
                   <li className="px-5 hidden md:block">
                     <div className="flex flex-row items-center h-8">

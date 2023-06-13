@@ -1,11 +1,15 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
+import useAuth from "../hooks/useAuth";
 
 const Navbar = () => {
+  const {themeMode, toggleThem} = useAuth()
   const [isOpen, setIsOpen] = useState(false);
-
+console.log(themeMode)
   const { user, logOut } = useContext(AuthContext);
+
+
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -95,6 +99,8 @@ const Navbar = () => {
                 Dashboard
               </Link>
             </div>
+
+            <button onClick={toggleThem}>{themeMode? "dark" : "light"}</button>
 
             <div className="flex items-center mt-4 lg:mt-0">
               {user ? (

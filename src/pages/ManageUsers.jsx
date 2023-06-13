@@ -24,8 +24,10 @@ const ManageUsers = () => {
  
 
   useEffect(() => {
-    setUsers(userData);
-  }, [userData]);
+    getUsers().then((data) => {
+      setUsers(data);
+    });
+  }, [users]);
 
 
 

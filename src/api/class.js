@@ -126,8 +126,8 @@ export const deleteSelectClass = async id => {
 
 
 // get all selected class
-export const getSelectdClass = async () => {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/selected`)
+export const getSelectdClass = async (email) => {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/selected/${email}`)
     const data = await response.json()
     return data
 }
