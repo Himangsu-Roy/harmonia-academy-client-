@@ -1,11 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import {BsFacebook} from "react-icons/bs";
+import { AiFillTwitterCircle, AiFillInstagram } from "react-icons/ai";
+
 
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white py-6">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 py-8">
           <div className="mb-6 sm:mb-0">
             <h4 className="text-gray-400 font-semibold text-[18px] mb-3">
               Company
@@ -72,17 +75,18 @@ const Footer = () => {
             </h4>
             <div className="flex space-x-3">
               <a href="#" className="text-gray-400 hover:text-white">
-                <i className="fab fa-facebook-f"></i>
+                <BsFacebook className="text-2xl" />
               </a>
               <a href="#" className="text-gray-400 hover:text-white">
-                <i className="fab fa-twitter"></i>
+                <AiFillTwitterCircle className="text-3xl" />
               </a>
               <a href="#" className="text-gray-400 hover:text-white">
-                <i className="fab fa-instagram"></i>
+                <AiFillInstagram className="text-3xl" />
               </a>
             </div>
           </div>
         </div>
+        <hr className="mt-5" />
         <p className="text-center text-gray-400 mt-6">
           © 2023 Harmonia Academy. All rights reserved.
         </p>

@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { getInstructors } from "../api/instructors";
+import Loader from "../components/Loader";
+
 
 const Instructors = () => {
   const [instructors, setInstructors] = useState([]) 
+  const [loading, setLoading] = useState(false);
 
 
   useEffect(() => {
+    setLoading(true)
     getInstructors()
     .then(data => {
       setInstructors(data)
+      setLoading(false)
     })
-  }, [instructors])
+  }, [])
+  
+  if(loading) {
+    return <Loader/>
+  }
 
   return (
     <div className="container mx-auto px-4 py-10">

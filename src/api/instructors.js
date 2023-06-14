@@ -3,6 +3,7 @@ export const getInstructors = async () => {
         method: 'GET',
         headers: {
             'content-type': 'application/json',
+            authorization: `Bearer ${localStorage.getItem('access-token')}`,
         },
     })
     return await res.json()

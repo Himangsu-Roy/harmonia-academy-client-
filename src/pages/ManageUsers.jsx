@@ -10,49 +10,32 @@ const ManageUsers = () => {
   const [axiosSecure] = useAxiosSecure();
   
   const { refetch, data: userData = [] } = useQuery({
-    queryKey: ["user", userName?.email],
+    queryKey: ["users", userName?.email],
     enabled: !loading,
     queryFn: async () => {
-      const res = await axiosSecure(
+      const res = await axiosSecure.get(
         `${import.meta.env.VITE_API_URL}/users`
       );
       console.log("res from axios", res.data);
       return res.data;
     },
   });
-  
  
 
   useEffect(() => {
-    getUsers().then((data) => {
-      setUsers(data);
-    });
-  }, [users]);
-
-
+    setUsers(userData);
+  }, [users, userData]);
 
 
   const handleMakeInstructor = (userId) => {
-    // setUsers((prevUsers) =>
-    //   prevUsers.map((user) =>
-    //     user.id === userId ? { ...user, role: "instructor" } : user
-    //   )
-    // );
-
     setRole(userId, { role: "instructor" })
     .then(data => {
       console.log(data)
       refetch()
     })
-
   };
 
   const handleMakeAdmin = (userId) => {
-    // setUsers((prevUsers) =>
-    //   prevUsers.map((user) =>
-    //     user._id === userId ? { ...user, role: "admin" } : user
-    //   )
-    // );
     setRole(userId, { role: "admin" })
     .then(data => {
       console.log(data)

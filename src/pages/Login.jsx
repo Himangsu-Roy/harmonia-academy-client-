@@ -29,7 +29,9 @@ const Login = () => {
     console.log("Form submitted:", data);
     signIn(data.email, data.password)
       .then((result) => {
+        toast.success("Successful Login");
         console.log(result.user);
+        saveUser(result.user);
         navigate(from, { replace: true });
       })
       .catch((err) => {
@@ -44,6 +46,7 @@ const Login = () => {
     // Handle Google login action
     signInWithGoogle()
       .then((result) => {
+        toast.success("Successful Login")
         console.log(result.user);
         // save user to db
         saveUser(result.user);
@@ -119,19 +122,23 @@ const Login = () => {
           <hr className="flex-grow border-gray-400" />
         </div>
 
-        <div className="flex justify-center">
-          <button
-            className="bg-white border border-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg flex items-center hover:bg-gray-100 focus:outline-none focus:border-blue-500"
-            onClick={handleGoogleLogin}>
-            <svg
-              className="w-6 h-6 mr-2"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg">
-              {/* Google logo */}
-            </svg>
-            Login with Google
-          </button>
+        <div className="flex justify-center" onClick={handleGoogleLogin}>
+          <div className="bg-white border border-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg flex items-center hover:bg-gray-100 focus:outline-none focus:border-blue-500 cursor-pointer">
+            <img
+              src="https://www.vectorlogo.zone/logos/google/google-icon.svg"
+              className="w-7"
+            />
+            <div className="text-gray-700 font-bold px-4 flex items-center ">
+              <svg
+                className="w-6 h-6 mr-2"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                {/* Google logo */}
+              </svg>
+              Login with Google
+            </div>
+          </div>
         </div>
 
         <p className="text-center text-gray-700 mt-4 text-sm">

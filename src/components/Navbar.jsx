@@ -2,13 +2,15 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 import useAuth from "../hooks/useAuth";
+import { ThemeContext } from "../providers/ThemeProvider";
+import {MdLightMode} from "react-icons/md";
+
 
 const Navbar = () => {
-  const {themeMode, toggleThem} = useAuth()
+  const { toggleTheme} = useContext(ThemeContext)
   const [isOpen, setIsOpen] = useState(false);
-console.log(themeMode)
-  const { user, logOut } = useContext(AuthContext);
 
+  const { user, logOut } = useContext(AuthContext);
 
 
   const toggleMenu = () => {
@@ -100,12 +102,11 @@ console.log(themeMode)
               </Link>
             </div>
 
-            <button onClick={toggleThem}>{themeMode? "dark" : "light"}</button>
+            <button onClick={toggleTheme} className="text-white mr-4"><MdLightMode className="text-2xl"/></button>
 
             <div className="flex items-center mt-4 lg:mt-0">
               {user ? (
                 <>
-
                   <div className="relative w-full">
                     
                     <div className="flex justify-between ">

@@ -1,18 +1,28 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getAllClasses, giveFeedback, updateStatus } from "../api/class";
+import Loader from "../components/Loader";
 
 const ManageClasses = () => {
+  const [loading, setLoading] = useState(false)
   const [selectedClass, setSelectedClass] = useState(null);
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const [feedbackText, setFeedbackText] = useState("");
+ 
 
   const [classes, setClasses] = useState([]);
   useEffect(() => {
+    setLoading(true)
     getAllClasses().then((data) => {
       setClasses(data);
+      setLoading(false)
     });
   }, []);
+
+
+   if (loading) {
+     return <Loader />;
+   }
 
   const handleApprove = (classId) => {
     // Update the status of the class to "approved"
@@ -49,11 +59,7 @@ const ManageClasses = () => {
   };
 
   const handleSendFeedback = () => {
-    // Handle sending feedback to the instructor for the selected class
-    console.log(
-      `Send feedback to instructor for class with id ${selectedClass}`
-    );
-    console.log(`Feedback: ${feedbackText}`);
+    
     giveFeedback(selectedClass, feedbackText)
       .then(data => {
         console.log(data)

@@ -4,7 +4,7 @@ export const addClass = async classData => {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
-            // authorization: `Bearer ${localStorage.getItem('access-token')}`,
+            authorization: `Bearer ${localStorage.getItem('access-token')}`,
         },
         body: JSON.stringify(classData),
     })
@@ -15,7 +15,13 @@ export const addClass = async classData => {
 
 // Get all Class
 export const getAllClasses = async () => {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/classes`)
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/classes`, {
+        method: "GET",
+        headers: {
+            "content-type": "application/json",
+            authorization: `Bearer ${localStorage.getItem('access-token')}`,
+        },
+    })
     const data = await response.json()
     return data
 }
@@ -28,6 +34,7 @@ export const updateStatus = async (id, classData) => {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
+                authorization: `Bearer ${localStorage.getItem('access-token')}`,
             },
             body: JSON.stringify(classData)
         }
@@ -45,6 +52,7 @@ export const giveFeedback = async (id, feedback) => {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json',
+                authorization: `Bearer ${localStorage.getItem('access-token')}`,
             },
             body: JSON.stringify({feedback})
         }
@@ -53,31 +61,20 @@ export const giveFeedback = async (id, feedback) => {
     return data
 }
 
-// //get filtered rooms for hosts
-// export const getRooms = async email => {
-//     const response = await fetch(`${import.meta.env.VITE_API_URL}/rooms/${email}`)
-//     const data = await response.json()
-//     return data
-// }
 
 // Get single class
 export const getClass = async id => {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/class/${id}`)
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/class/${id}`, {
+        method: "GET",
+        headers: {
+            'content-type': 'application/json',
+            authorization: `Bearer ${localStorage.getItem('access-token')}`,
+        },
+    })
     const data = await response.json()
     return data
 }
 
-// // Delete a room
-// export const deleteRoom = async id => {
-//     const response = await fetch(`${import.meta.env.VITE_API_URL}/rooms/${id}`, {
-//         method: 'DELETE',
-//         headers: {
-//             'content-type': 'application/json',
-//         },
-//     })
-//     const result = await response.json()
-//     return result
-// }
 
 // update a class
 export const updateClass = async (classData, id) => {
@@ -85,7 +82,7 @@ export const updateClass = async (classData, id) => {
         method: 'PUT',
         headers: {
             'content-type': 'application/json',
-            // authorization: `Bearer ${localStorage.getItem('access-token')}`,
+            authorization: `Bearer ${localStorage.getItem('access-token')}`,
         },
         body: JSON.stringify(classData),
     })
@@ -102,7 +99,7 @@ export const selectClass = async selectData => {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
-            // authorization: `Bearer ${localStorage.getItem('access-token')}`,
+            authorization: `Bearer ${localStorage.getItem('access-token')}`,
         },
         body: JSON.stringify(selectData),
     })
@@ -114,10 +111,11 @@ export const selectClass = async selectData => {
 
 // Delete select class
 export const deleteSelectClass = async id => {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/selectClass/${id}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/selectedClass/${id}`, {
         method: 'DELETE',
         headers: {
             'content-type': 'application/json',
+            authorization: `Bearer ${localStorage.getItem('access-token')}`,
         },
     })
     const result = await response.json()
@@ -127,7 +125,13 @@ export const deleteSelectClass = async id => {
 
 // get all selected class
 export const getSelectdClass = async (email) => {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/selected/${email}`)
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/selected/${email}`, {
+        method: "GET",
+        headers: {
+            'content-type': 'application/json',
+            authorization: `Bearer ${localStorage.getItem('access-token')}`,
+        },
+    })
     const data = await response.json()
     return data
 }

@@ -9,16 +9,14 @@ const SelectedClasses = () => {
   const [selectedClasses, setSelectedClasses] = useState([]);
 
   const { user, loading } = useAuth();
-  const [users, setUsers] = useState([]);
   const [axiosSecure] = useAxiosSecure();
-  const [isData, isSetData] = useState(true);
-
+console.log(user)
   const { refetch, data = [] } = useQuery({
     queryKey: ["select", user?.email],
     enabled: !loading,
     queryFn: async () => {
       const res = await axiosSecure.get(`${import.meta.env.VITE_API_URL}/selected/${user?.email}`);
-      console.log("res from axios", res.data);
+      
       return res.data;
     },
   });
@@ -26,9 +24,9 @@ const SelectedClasses = () => {
   useEffect(() => {
     getSelectdClass(user?.email).then((data) => {
       setSelectedClasses(data);
-      console.log(data)
+      console.log(data);
     });
-  }, [selectedClasses]);
+  }, [selectedClasses, data]);
 
 
 

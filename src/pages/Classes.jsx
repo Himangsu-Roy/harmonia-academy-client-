@@ -1,50 +1,76 @@
 import React, { useEffect, useState } from "react";
 import { getAllClasses, getClass, selectClass } from "../api/class";
 import useAuth from "../hooks/useAuth";
+import { toast } from "react-hot-toast";
+import Loader from "../components/Loader";
 
 const Classes = ({ loggedIn, isAdmin }) => {
-  const {user} = useAuth();
+  const { user, role } = useAuth();
   const [classes, setClasses] = useState([]);
-  
- 
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    getAllClasses()
-      .then(data => {
-        console.log(data)
-        setClasses(data)
-      })
-  }, [])
+    setLoading(true);
+    getAllClasses().then((data) => {
+      console.log(data);
+      setClasses(data);
+      setLoading(false);
+    });
+  }, []);
 
-  console.log(classes)
+  if (loading) {
+    return <Loader />;
+  }
 
-  const handleSelectClass = (classId) => {
+  console.log(classes);
+
+  const handleSelectClass = (className, classId) => {
     if (!user) {
-      alert("Please log in before selecting the course.");
+      toast.error("Please log in before selecting the course.");
       return;
     }
 
-    if (isAdmin) {
-      alert("As an admin/instructor, you cannot select a class.");
+    if (role === "admin") {
+      toast.error("As an admin you cannot select a class.");
+      return;
+    }
+
+    if (role === "instructor") {
+      toast.error("As an instructor you cannot select a class.");
       return;
     }
 
     // get class by id
-    getClass(classId)
-    .then(data => {
-      console.log(data)
-      
-      data.map(item => {
-        // setItems(item)
-        selectClass({...item, email: user?.email})
-        .then(data => {
-          console.log(data)
-        })
-      })
-    })
-   
+    getClass(classId).then((data) => {
+      console.log(data);
 
-    alert(`You have selected the class: ${""}`);
+      data.map((item) => {
+        // setItems(item)
+        const {
+          className,
+          classImage,
+          instructorName,
+          instructorEmail,
+          availableSeats,
+          price,
+        } = item;
+        const selectData = {
+          className,
+          classImage,
+          instructorName,
+          instructorEmail,
+          availableSeats,
+          price,
+        };
+        selectClass({ ...selectData, email: user?.email }).then((data) => {
+          data.error
+            ? toast.error("Class Already exist")
+            : toast.success(`You have selected the class successful added`);
+          // console.log(data.acknowledged);
+        });
+      });
+    });
+
   };
 
   return (
@@ -54,8 +80,8 @@ const Classes = ({ loggedIn, isAdmin }) => {
         {classes.map((cls, index) => (
           <div
             key={index}
-            className={`bg-white rounded-lg overflow-hidden shadow-md ${
-              cls.availableSeats === 0 ? "bg-red-400" : ""
+            className={` rounded-lg overflow-hidden shadow-md ${
+              cls.availableSeats === 0 ? "bg-red-400" : "bg-white"
             }`}>
             <img
               className="w-full h-48 object-cover"
@@ -73,12 +99,20 @@ const Classes = ({ loggedIn, isAdmin }) => {
               <p className="text-gray-600">Price: ${cls.price}</p>
               <button
                 className={`mt-4 bg-blue-500 text-white py-2 px-4 rounded ${
-                  !user || isAdmin || cls.availableSeats === 0
+                  !user ||
+                  role === "admin" ||
+                  role === "instructor" ||
+                  cls.availableSeats === 0
                     ? "opacity-50 cursor-not-allowed"
                     : ""
                 }`}
-                onClick={() => handleSelectClass(cls._id)}
-                disabled={!user || isAdmin || cls.availableSeats === 0}>
+                onClick={() => handleSelectClass(cls.className, cls._id)}
+                disabled={
+                  !user ||
+                  role === "admin" ||
+                  role === "instructor" ||
+                  cls.availableSeats === 0
+                }>
                 {user ? "Select" : "Log in to Select"}
               </button>
             </div>

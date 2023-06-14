@@ -21,8 +21,8 @@ const AddClass = () => {
       const newClass = {
         className,
         classImage: data.data.display_url,
-        instructorName: user?.displayName, // Replace with the actual instructor name (use the displayName value of logged in user/instructor)
-        instructorEmail: user?.email, // Replace with the actual instructor email (use the email value of logged in user/instructor)
+        instructorName: user?.displayName, 
+        instructorEmail: user?.email, 
         availableSeats,
         price,
         status: "pending",
@@ -41,14 +41,13 @@ const AddClass = () => {
       })
       .catch(err => console.log(err.message))
     });
-
     
 
     // Clear the form fields
-    // setClassName("");
-    // setClassImage("");
-    // setAvailableSeats(0);
-    // setPrice(0);
+    setClassName("");
+    setClassImage("");
+    setAvailableSeats(0);
+    setPrice(0);
   };
 
   const handleClassImageChange = (e) => {

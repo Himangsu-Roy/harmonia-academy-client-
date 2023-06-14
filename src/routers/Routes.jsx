@@ -17,6 +17,7 @@ import Registration from "../pages/Registration";
 import Login from "../pages/Login";
 import UpdateClass from "../pages/UpdateClass";
 import Payment from "../pages/Payment";
+import PrivateRouter from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -48,46 +49,86 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: (
+      <PrivateRouter>
+        <Dashboard />
+      </PrivateRouter>
+    ),
     children: [
       {
         path: "manageclasses",
-        element: <ManageClasses />,
+        element: (
+          <PrivateRouter>
+            <ManageClasses />
+          </PrivateRouter>
+        ),
       },
       {
         path: "manageusers",
-        element: <ManageUsers />,
+        element: (
+          <PrivateRouter>
+            <ManageUsers />
+          </PrivateRouter>
+        ),
       },
       {
         path: "addclass",
-        element: <AddClass />,
+        element: (
+          <PrivateRouter>
+            <AddClass />
+          </PrivateRouter>
+        ),
       },
       {
         path: "myclasses",
-        element: <MyClasses />,
+        element: (
+          <PrivateRouter>
+            <MyClasses />
+          </PrivateRouter>
+        ),
       },
       {
         path: "selectdclasses",
-        element: <SelectedClasses />,
+        element: (
+          <PrivateRouter>
+            <SelectedClasses />
+          </PrivateRouter>
+        ),
       },
       {
         path: "enrollclasses",
-        element: <EnrollClasses />,
+        element: (
+          <PrivateRouter>
+            <EnrollClasses />
+          </PrivateRouter>
+        ),
       },
       {
         path: "paymenthistory",
-        element: <PaymentHistory />,
+        element: (
+          <PrivateRouter>
+            <PaymentHistory />
+          </PrivateRouter>
+        ),
       },
       {
         path: "myclasses/update/:id",
-        element: <UpdateClass />,
+        element: (
+          <PrivateRouter>
+            <UpdateClass />
+          </PrivateRouter>
+        ),
         loader: ({ params }) =>
           fetch(`${import.meta.env.VITE_API_URL}/class/${params.id}`),
       },
       {
         path: "payment/:id",
-        element: <Payment />,
-        loader: ({params}) =>
+        element: (
+          <PrivateRouter>
+            <Payment />
+          </PrivateRouter>
+        ),
+        loader: ({ params }) =>
           fetch(`${import.meta.env.VITE_API_URL}/selectClass/${params.id}`),
       },
     ],

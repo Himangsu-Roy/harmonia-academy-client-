@@ -25,6 +25,8 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [themeMode, setThemeMode] = useState(false);
 
+  console.log(role)
+
   const toggleTheme = () => {
     setThemeMode((prevTheme) => !prevTheme);
   };

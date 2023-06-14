@@ -127,7 +127,8 @@ const CheckoutForm = () => {
   const selectData = useLoaderData();
   const { price, _id, instructorName, availableSeats, className } = selectData;
   const classPrice = (parseFloat(price)).toFixed(2)
-  console.log(_id);
+  console.log(_id, price);
+  console.log(selectData)
 
   console.log(billingDetails)
 

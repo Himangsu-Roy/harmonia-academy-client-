@@ -70,7 +70,7 @@ const Dashboard = () => {
                     </Link>
                   </li>
                 </>
-              ) : role === "isInstructor" ? (
+              ) : role === "instructor" ? (
                 <>
                   <li className="px-5 hidden md:block">
                     <div className="flex flex-row items-center h-8">

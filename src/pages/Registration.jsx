@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import { saveUser } from "../api/users";
+import { toast } from "react-hot-toast";
 
 const Registration = () => {
   const { createUser, updateUserProfile, signInWithGoogle } =
@@ -34,17 +35,20 @@ const Registration = () => {
         updateUserProfile(data.name, data.photoURL)
           .then(() => {
             saveUser(result.user)
+            toast.success("Registration Successful");
             navigate(from, { replace: true });
             console.log("User Profile Updated");
           })
           .catch((error) => {
             console.log("Error updating profile: ", error);
             setError(error.message);
+
           });
       })
       .catch((error) => {
         console.log(error);
         setError(error.message);
+        toast.error(error.message)
       });
 
     setError("")
@@ -55,6 +59,7 @@ const Registration = () => {
     // Handle Google login action
     signInWithGoogle().then((result) => {
       const user = result.user;
+      toast.success("Successful Login");
       saveUser(user)
       if (user) {
         navigate(from, { replace: true });
@@ -68,7 +73,7 @@ const Registration = () => {
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4">
-            <p className="text-red-600 mb-5">{error}</p>
+        <p className="text-red-600 mb-5">{error}</p>
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
@@ -186,19 +191,23 @@ const Registration = () => {
           <hr className="flex-grow border-gray-400" />
         </div>
 
-        <div className="flex items-center justify-center mt-4">
-          <button
-            className="flex items-center bg-white hover:bg-gray-100 text-gray-700 font-semibold py-2 px-4 border border-gray-300 rounded-md shadow-sm"
-            onClick={handleGoogleLogin}>
-            <svg
-              className="w-5 h-5 mr-2"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg">
-              {/* Google logo */}
-            </svg>
-            Login with Google
-          </button>
+        <div className="flex justify-center" onClick={handleGoogleLogin}>
+          <div className="bg-white border border-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg flex items-center hover:bg-gray-100 focus:outline-none focus:border-blue-500 cursor-pointer">
+            <img
+              src="https://www.vectorlogo.zone/logos/google/google-icon.svg"
+              className="w-7"
+            />
+            <div className="text-gray-700 font-bold px-4 flex items-center ">
+              <svg
+                className="w-6 h-6 mr-2"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                {/* Google logo */}
+              </svg>
+              Login with Google
+            </div>
+          </div>
         </div>
         <div className="flex items-center justify-center mt-4">
           <p className="text-gray-700 text-sm">

@@ -36,19 +36,6 @@ console.log(classImage)
 
     imageUpload(image).then((data) => {
       console.log(data?.data?.display_url);
-      // Create a new class object with the form data
-      // const newClass = {
-      //   className: classData?.className,
-      //   classImage: data?.data?.display_url,
-      //   instructorName: user?.displayName, // Replace with the actual instructor name (use the displayName value of logged in user/instructor)
-      //   instructorEmail: user?.email, // Replace with the actual instructor email (use the email value of logged in user/instructor)
-      //   availableSeats: classData?.availableSeats,
-      //   price: classData?.price,
-      // };
-      // setUpdateClass(newClass);
-      // console.log(newClass);
-      // console.log(updateClass);
-      // Perform an API call to add the class to the database
       setClassImage(data?.data?.display_url);
       updateClass(updateClassData, getId)
         .then((data) => {
